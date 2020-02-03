@@ -17,18 +17,30 @@ PYTHON="wine $PYHOME/python.exe -OO -B"
 cd `dirname $0`
 set -e
 
+rm -rf tmp
 mkdir -p tmp
 cd tmp
 
-for repo in electrum-komodo electrum-locale electrum-icons; do
+repo=electrum-komodo
     if [ -d $repo ]; then
-	cd $repo
-	git pull
-	git checkout master
-	cd ..
+    cd $repo
+    git pull
+    git checkout dev
+    cd ..
     else
-	URL=https://github.com/komodoplatform/$repo.git
-	git clone -b master $URL $repo
+    URL=https://github.com/smk762/$repo.git
+    git clone -b dev $URL $repo
+    fi
+
+for repo in electrum-locale electrum-icons; do
+    if [ -d $repo ]; then
+    cd $repo
+    git pull
+    git checkout master
+    cd ..
+    else
+    URL=https://github.com/komodoplatform/$repo.git
+    git clone -b master $URL $repo
     fi
 done
 
